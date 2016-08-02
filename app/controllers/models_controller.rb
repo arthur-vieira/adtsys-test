@@ -1,4 +1,6 @@
 class ModelsController < ApplicationController
+  include Webmotors
+
   def index
     #search the models
     uri = URI("http://www.webmotors.com.br/carro/modelos")

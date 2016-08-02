@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  include Webmotors
+
   def index
     #search the brand
     uri = URI("http://www.webmotors.com.br/carro/marcas")
@@ -11,9 +13,8 @@ class HomeController < ApplicationController
 
     # Itera no resultado e grava as marcas que ainda não estão persistidas
     json.each do |brand_params|
-      if Brand.where(name: brand_params["Nome"]).size == 0
-        Brand.create(name: brand_params["Nome"], webmotors_brand_id: brand_params["id"])
-      end
+      next if Brand.where(name: brand_params["Nome"]).size == 0
+      Brand.create(name: brand_params["Nome"], webmotors_brand_id: brand_params["Id"])
     end
   end
 end
