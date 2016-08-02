@@ -13,7 +13,7 @@ class HomeController < ApplicationController
 
     # Itera no resultado e grava as marcas que ainda não estão persistidas
     json.each do |brand_params|
-      next if Brand.where(name: brand_params["Nome"]).size == 0
+      next if brand_params["Nome"].blank? || Brand.where(name: brand_params["Nome"])
       Brand.create(name: brand_params["Nome"], webmotors_brand_id: brand_params["Id"])
     end
   end
